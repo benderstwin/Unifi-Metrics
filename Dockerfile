@@ -12,4 +12,4 @@ COPY --from=builder /install /usr/local
 COPY . /app
 #WORKDIR /app/Unifi-Metrics-Collector
 VOLUME [ "/app" ]
-CMD "/bin/ash"
+CMD ["/bin/ash"]
