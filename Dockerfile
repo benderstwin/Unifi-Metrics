@@ -1,10 +1,15 @@
-FROM python:3
+FROM python:3.6-alpine as base
 MAINTAINER Bender
-COPY . /app
-WORKDIR /app
-RUN pip install -r requirements.txt
+FROM base as builder
+RUN mkdir /install
+WORKDIR /install
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+COPY requirements.txt /requirements.txt
+RUN pip install --install-option="--prefix=/install" -r /requirements.txt
+FROM base
+COPY --from=builder /install /usr/local
+COPY . /app
 WORKDIR /app/Unifi-Metrics-Collector
-ENTRYPOINT ["python3"]
-CMD ["/bin/bash"]
+VOLUME [ "/app" ]
+CMD "/bin/ash"
