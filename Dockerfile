@@ -7,4 +7,4 @@ ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 WORKDIR /app/Unifi-Metrics-Collector
 ENTRYPOINT ["python3"]
-CMD ["./unifi_collector.py"]
+CMD ["/bin/bash"]
