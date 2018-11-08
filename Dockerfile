@@ -1,14 +1,10 @@
-FROM python:3.7-alpine as base
-MAINTAINER Bender
-FROM base as builder
-RUN mkdir /install
-WORKDIR /install
-COPY requirements.txt /requirements.txt
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
-FROM base
-COPY --from=builder /install /usr/local
+FROM python:3-alpine
+MAINTAINER Caleb Dunn
 COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 WORKDIR /app/Unifi-Metrics-Collector
-VOLUME [ "/app" ]
 ENTRYPOINT ["python3"]
 CMD ["./unifi_collector.py"]
